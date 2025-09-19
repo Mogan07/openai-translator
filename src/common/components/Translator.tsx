@@ -1240,6 +1240,10 @@ function InnerTranslator(props: IInnerTranslatorProps) {
             setShowSettings(true)
             return
         }
+        if (settings.provider === 'DeepL' && !settings.deeplAPIKey) {
+            setShowSettings(true)
+            return
+        }
     }, [props.defaultShowSettings, setShowSettings, settings])
 
     const [isOCRProcessing, setIsOCRProcessing] = useState(false)

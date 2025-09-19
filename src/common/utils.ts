@@ -57,6 +57,9 @@ const settingKeys: Record<keyof ISettings, number> = {
     miniMaxAPIModel: 1,
     moonshotAPIKey: 1,
     moonshotAPIModel: 1,
+    deeplAPIKey: 1,
+    deeplAPIURL: 1,
+    deeplAPIURLPath: 1,
     geminiAPIURL: 1,
     geminiAPIKey: 1,
     geminiAPIModel: 1,
@@ -130,6 +133,15 @@ export async function getSettings(): Promise<ISettings> {
     }
     if (!settings.apiModel) {
         settings.apiModel = defaultAPIModel
+    }
+    if (!settings.deeplAPIKey) {
+        settings.deeplAPIKey = ''
+    }
+    if (!settings.deeplAPIURL) {
+        settings.deeplAPIURL = 'https://api-free.deepl.com'
+    }
+    if (!settings.deeplAPIURLPath) {
+        settings.deeplAPIURLPath = '/v2/translate'
     }
     if (!settings.provider) {
         settings.provider = defaultProvider
