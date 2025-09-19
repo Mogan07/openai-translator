@@ -9,6 +9,15 @@ export interface IMessage {
     content: string
 }
 
+export interface IMessageRequestMeta {
+    originalText?: string
+    sourceLang?: string
+    targetLang?: string
+    mode?: string
+    writing?: boolean
+    selectedWord?: string
+}
+
 export interface IMessageRequest {
     rolePrompt: string
     commandPrompt: string
@@ -17,6 +26,7 @@ export interface IMessageRequest {
     onFinished: (reason: string) => void
     onStatusCode?: (statusCode: number) => void
     signal: AbortSignal
+    meta?: IMessageRequestMeta
 }
 
 export interface IEngine {

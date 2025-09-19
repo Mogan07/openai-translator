@@ -72,6 +72,9 @@ export interface ISettings {
     geminiAPIModel: string
     moonshotAPIKey: string
     moonshotAPIModel: string
+    deeplAPIKey: string
+    deeplAPIURL: string
+    deeplAPIURLPath: string
     deepSeekAPIKey: string
     deepSeekAPIModel: string
     autoTranslate: boolean

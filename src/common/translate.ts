@@ -4,6 +4,7 @@ import { getLangConfig, getLangName, LangCode } from '../common/lang'
 import { Action } from './internal-services/db'
 import { codeBlock, oneLine, oneLineTrim } from 'common-tags'
 import { getEngine } from './engines'
+import { IMessageRequestMeta } from './engines/interfaces'
 import { getSettings } from './utils'
 
 export type TranslateMode = 'translate' | 'polishing' | 'summarize' | 'analyze' | 'explain-code' | 'big-bang'
@@ -198,6 +199,9 @@ export async function translate(query: TranslateQuery) {
     let commandPrompt = ''
     let contentPrompt = query.text
     let isWordMode = false
+    const metadata: IMessageRequestMeta = {
+        originalText: query.text,
+    }
 
     if (query.mode === 'big-bang') {
         rolePrompt = oneLine`
@@ -208,6 +212,7 @@ export async function translate(query: TranslateQuery) {
         Write ${query.articlePrompt} of no more than 160 words.
         The article must contain the words in the following text.
         The more words you use, the better`
+        metadata.mode = query.mode
     } else {
         const sourceLangCode = query.detectFrom
         const targetLangCode = query.detectTo
@@ -220,6 +225,11 @@ export async function translate(query: TranslateQuery) {
         const sourceLangConfig = getLangConfig(sourceLangCode)
         console.debug('Source language is', sourceLangConfig)
         rolePrompt = targetLangConfig.rolePrompt
+        metadata.sourceLang = sourceLangCode
+        metadata.targetLang = targetLangCode
+        metadata.mode = query.action.mode ?? query.mode ?? 'translate'
+        metadata.writing = query.writing
+        metadata.selectedWord = query.selectedWord
 
         switch (query.action.mode) {
             case null:
@@ -414,5 +424,6 @@ If you understand, say "yes", and then we will begin.`
         onStatusCode: (statusCode) => {
             query.onStatusCode?.(statusCode)
         },
+        meta: metadata,
     })
 }

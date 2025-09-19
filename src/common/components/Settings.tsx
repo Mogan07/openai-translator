@@ -1339,6 +1339,7 @@ function ProviderSelector({ value, onChange, hasPromotion }: IProviderSelectorPr
               { label: 'Moonshot', id: 'Moonshot' },
               { label: 'Groq', id: 'Groq' },
               { label: 'DeepSeek', id: 'DeepSeek' },
+              { label: 'DeepL', id: 'DeepL' },
           ] as {
               label: string
               id: Provider
@@ -1356,6 +1357,7 @@ function ProviderSelector({ value, onChange, hasPromotion }: IProviderSelectorPr
               { label: 'Moonshot', id: 'Moonshot' },
               { label: 'Groq', id: 'Groq' },
               { label: 'DeepSeek', id: 'DeepSeek' },
+              { label: 'DeepL', id: 'DeepL' },
           ] as {
               label: string
               id: Provider
@@ -2464,6 +2466,49 @@ export function InnerSettings({
                                     apiKey={values.deepSeekAPIKey}
                                     onBlur={onBlur}
                                 />
+                            </FormItem>
+                        </div>
+                        <div
+                            style={{
+                                display: values.provider === 'DeepL' ? 'block' : 'none',
+                            }}
+                        >
+                            <FormItem
+                                required={values.provider === 'DeepL'}
+                                name='deeplAPIKey'
+                                label='DeepL API Key'
+                                caption={
+                                    <div>
+                                        {t('Go to the')}{' '}
+                                        <a
+                                            target='_blank'
+                                            href='https://www.deepl.com/account/summary'
+                                            rel='noreferrer'
+                                            style={linkStyle}
+                                        >
+                                            DeepL Account
+                                        </a>{' '}
+                                        {t('to get your API Key.')}
+                                    </div>
+                                }
+                            >
+                                <Input autoFocus type='password' size='compact' onBlur={onBlur} />
+                            </FormItem>
+                            <FormItem
+                                required={values.provider === 'DeepL'}
+                                name='deeplAPIURL'
+                                label={t('API URL')}
+                                caption={t('Generally, there is no need to modify this item.')}
+                            >
+                                <Input size='compact' onBlur={onBlur} />
+                            </FormItem>
+                            <FormItem
+                                required={values.provider === 'DeepL'}
+                                name='deeplAPIURLPath'
+                                label={t('API URL Path')}
+                                caption={t('Generally, there is no need to modify this item.')}
+                            >
+                                <Input size='compact' onBlur={onBlur} />
                             </FormItem>
                         </div>
                         <div
